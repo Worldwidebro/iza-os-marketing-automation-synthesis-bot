@@ -1,0 +1,31 @@
+{
+  "name": "IZA OS Marketing Automation",
+  "trigger": {
+    "type": "schedule",
+    "schedule": "0 9 * * 1-5"
+  },
+  "actions": [
+    {
+      "type": "gmail_send_email",
+      "config": {
+        "to": "{{venture.contact_email}}",
+        "subject": "Weekly Marketing Update - {{venture.name}}",
+        "body": "Your weekly marketing performance report is ready!"
+      }
+    },
+    {
+      "type": "slack_post_message",
+      "config": {
+        "channel": "#marketing",
+        "text": "Marketing update sent for {{venture.name}}"
+      }
+    },
+    {
+      "type": "google_sheets_append_row",
+      "config": {
+        "sheet_id": "{{venture.marketing_sheet_id}}",
+        "values": ["{{venture.name}}", "{{venture.revenue}}", "{{venture.customers}}"]
+      }
+    }
+  ]
+}
